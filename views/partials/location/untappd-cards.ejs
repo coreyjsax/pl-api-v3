@@ -1,0 +1,395 @@
+<div>
+<style scoped>
+        h1,
+h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+
+.prices.sub-head{
+    text-align:center;
+}
+
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+.card {
+    margin:5px;
+    padding:2px;
+    height: 370px;
+    width: 300px;
+    border-radius: 3px;
+    display: inline-block;
+    position:relative;
+    background-color:white;
+    background-image: url('http://api.thumbr.it/whitenoise-361x370.png?background=f7f3edff&noise=626262&density=45&opacity=11');
+    -webkit-box-shadow: 1px 0px 14px -4px rgba(0,0,0,0.85);
+    -moz-box-shadow: 1px 0px 14px -4px rgba(0,0,0,0.85);
+    box-shadow: 1px 0px 14px -4px rgba(0,0,0,0.85);
+    transition: 0.3s;
+   
+    
+  }
+  
+  .card:first-child {
+      margin-left:15px;
+  }
+  .item-img {
+      border-radius: 3px 3px 0px 0px;
+  }
+  
+   .sidenav {
+  height: 359px; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+   position:absolute;/* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 43px; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
+ 
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: relative;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.main {
+    position: relative;
+}
+.ui.button.view {
+    width: 90%;
+    margin-top:30%;
+    
+ 
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  
+  background-image: -moz-linear-gradient(top, #feac5e, #c779d0, #4bc0c8);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#feac5e), to(#c779d0), to(#4bc0c8));
+  background-image: -webkit-linear-gradient(top, #feac5e, #c779d0, #4bc0c8);
+  background-image: -o-linear-gradient(top, #feac5e, #c779d0, #4bc0c8);
+  background-image: linear-gradient(to bottom, #feac5e, #c779d0, #4bc0c8);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#feac5e', endColorstr='#f4bc0c8', GradientType=0);
+  background-repeat: repeat-y;
+  background-size: 100% 90px;
+  background-position: 0 -30px;
+  -webkit-transition: all 0.2s linear;
+     -moz-transition: all 0.2s linear;
+       -o-transition: all 0.2s linear;
+          transition: all 0.2s linear;
+}
+
+.ui.button.view:hover{
+    width: 90%;
+    margin-top:30%;
+    background-position: 0 0;
+    
+}
+.header > h4 {
+    text-align:center;
+    font-family: 'Axiforma-Bold';
+}
+
+.card-footer {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:-80px;
+}
+
+.card-header {
+    margin-top:15px;
+}
+.card-header > h4 {
+    font-family: 'Axiforma-Bold';
+    font-size: 20px;
+}
+.card-content {
+    text-align: center;
+}
+.dates {
+    font-size: 12px;
+}
+.headline {
+    font-weight:900;
+}
+.sections{
+    margin-top:10px;
+}
+.section-back {
+    margin-top:-20px;
+     opacity:.5;
+    height:100px;
+    overflow:scroll;
+}
+.section-back::-webkit-scrollbar { width: 0 !important }
+.section-back { overflow: -moz-scrollbars-none; }
+.section-back { -ms-overflow-style: none; }
+
+.brewery {
+    font-family: 'Axiforma-Bold';
+    font-weight: 900;
+}
+
+.section-name {
+    font-family: 'Axiforma-Bold';
+    font-size: 20px;
+}
+
+.ui.icon.header.menu-title {
+    font-family: 'Axiforma-Bold';
+    font-size: 25px;
+}
+.edit.icon {
+    text-align:right;
+}
+
+.add-section {
+    font-size:15px;
+}
+
+.section-settings {
+   float:right;
+   font-size:20px;
+}
+
+.ui.mini.input {
+    height:30px;
+}
+.add-section {
+    margin-top:20px;
+}
+</style>
+    <div>
+        <% include ../widgets/gallery-nav %>
+    </div>
+    <div>
+    <section id="untappd" class="scrolling-wrapper">
+        <% for (let i = 0; i < untappd.length; i++) { %>
+        <div class="card">
+            <i style="float:right" class="x icon delete" data-action="delete-menu"></i>
+            <div class="header card-header">
+                
+                <h4 style="color:black"><%=untappd[i].menu.name%></h4>
+            </div>
+            <div class="card-content">
+                <% if (untappd[i].menu.unpublished === true) { %>
+                    <span style="color:red">Not published to untappd</span>
+                <% } else { %>
+                    <span style="color:green">Published to untappd</span>
+                <% } %>
+                <% 
+                    function getLocalTime(date){
+                        let newDate = new Date(Date.parse(date))
+                        return newDate.toLocaleString()
+                    }
+                %>
+                <div class="dates">
+                    <br><br><span class="headline">Last updated</span><br><span><%=getLocalTime(untappd[i].menu.updated_at)%></span>
+                    <br><br><span class="headline">Created on</span><br><span><%=getLocalTime(untappd[i].menu.created_at)%></span>
+                </div>
+                 
+                <div class="sections">
+                    <h4>Sections</h4>
+                    <div class="section-back">
+                    <% let section = untappd[i].menu.sections;%>
+                    <% for (let i = 0; i < section.length; i++) { %>
+                        <br><%= section[i].name%>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button href="" class="ui button view" data-action="edit" data-id="<%=untappd[i].menu.id%>">
+                        edit menu
+                </button>
+            </div>
+        </div>
+        <% } %>
+        <div class="sidenav">
+            <a href="javascript:void(0)" class="closebtn">&times;</a>
+            <a class="new" data-content="beer-menu">add beer menu</a>
+            
+        </div>
+    </section>
+    </div>
+<script>
+    function untappdGalleryController(){
+        let untappdGallery = document.getElementById('untappd-gallery');
+        let untappd = untappdGallery.querySelector('section');
+        untappd.addEventListener('click', (event) => {
+            let target = event.target;
+            
+            console.log(target)
+            
+            if (target.matches('button')) {
+                let action = target.getAttribute('data-action');
+                let id = target.getAttribute('data-id');
+                if (action === "edit"){
+                    editMenu(id);
+                } 
+            } else if (target.matches('.new')){
+                let content = target.getAttribute('data-content');
+                alert(content)
+            } else if (target.matches('.delete')){
+                alert('delete')
+            }
+        });
+        let editMenu = (menuId) => {
+            let untappd = <%-JSON.stringify(untappd) %>
+            let menu = untappd.filter(m => {return m.menu.id == menuId})
+                menu = menu[0].menu;
+            
+            let modal = document.getElementById('form_modal');
+                modalController(modal)
+            let modal_header = modal.querySelector('.header');
+                modal_header.innerHTML = `
+                    ${menu.name}
+                    <br>
+                    <div class="add-section">
+                        <button class="ui button inverted teal mini add-section add" data-action="add-section" data-menu_id=${menuId}>add section</button>
+                    </div>
+                    
+                `;
+                modal_header.classList.add('menu-title')
+                
+            let modal_content = modal.querySelector('.content')
+            let sections = menu.sections.map(section => {return section});
+            
+            console.log(sections)
+            let menuSections = `
+               <div>
+                 
+                  <div class="ui inverted accordion">
+                   ${sections.map(section => 
+                        `
+                        <div class="section ui inverted segment"">
+                        <div class="title">
+                            <i class="dropdown icon"></i>
+                             <span class="section-name">${section.name}</span> <span class="section-settings" data-id="${section.id}">
+                                <i class="edit icon"></i><i class="trash alternate icon"></i></span>
+                             <br><span class="section-description">${section.description}</span>
+                             
+                        </div>
+                        
+                        <div class="content">
+                            ${section.items.map(item => 
+                                `<div class="ui segment secondary inverted">
+                                    <img class="ui avatar image" src="${item.label_image_hd}">
+                                    <span class="brewery">${item.brewery}</span> | <span class="brewery">${item.name}</span>
+                                    | ${item.style} | ${item.abv}%
+                                 </div>`
+                            ).join('')}
+                        </div>
+                        </div>`
+                   ).join('')}
+                    
+                    
+                  </div>
+                </div>
+            `;
+            modal_content.innerHTML = menuSections;
+            $('.ui.vertical.accordion.menu').accordion()
+            $(modal).modal('show');
+            $('.ui.accordion').accordion();
+            
+        }
+        let modalController = (modal) => {
+            modal.addEventListener('click', (event) => {
+                let target = event.target;
+                if (target.matches('.edit')){
+                    
+                    let section = target.closest('.section');
+                    
+                } else if (target.matches('.trash')){
+                    
+                    let section = target.closest('.section');
+                    confirmAction('delete', target, <%-JSON.stringify(location._id)%>)
+                    console.log(target)
+                    //removeSection(section);
+                } else if (target.matches('.add')) {
+                    let action = target.getAttribute('data-action');
+                    let menuId = target.getAttribute('data-menu_id');
+                    if (action === 'add-section'){
+                       let accordion = modal.querySelector('.accordion');
+                       accordion.innerHTML += untappdSectionCreate.sectionInput(<%-JSON.stringify(location._id)%>, menuId);
+                       let form = document.getElementById('create-sec');
+                       form.addEventListener('click', untappdSectionCreate.listen)
+                    }
+                } else if (target.matches('.delete')){
+                    confirmAction('delete')
+                    
+                } else if (target.matches('.cancel')){
+                      let form = document.getElementById('create-sec');
+                      form.removeEventListener('click', untappdSectionCreate.listen)
+                }
+            })
+        }
+        
+        let removeSection = (section) => {
+            
+            let sectionId = section.querySelector('.section-settings').getAttribute('data-id');
+            $(section).transition('fly right')
+            deleteUntappdSection(sectionId, <%-JSON.stringify(location._id)%>)
+            .then((res) => {
+                notification(`${res.section.name} has been deleted! `)
+            });
+        }
+        
+        let editSection = (section) => {
+            let title = section.querySelector('.section-name');
+            let titleText = title.innerText;
+            title.innerHTML = `
+                <div class="ui mini input">
+                    <input type="text" value="${titleText}">
+                </div>
+            `;
+        }
+    
+        
+    }
+    untappdGalleryController();
+</script>
+</div>

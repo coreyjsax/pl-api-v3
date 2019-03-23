@@ -1,0 +1,589 @@
+
+const delay = (function(){
+        let timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+})();
+
+
+let navClick = (target, chosen) => {
+    let counter = {
+        current: 'menu',
+        previous: ''
+    };
+    let previous = chosen[0].getAttribute('data-action');
+    let current = target.getAttribute('data-action');
+    if (target !== chosen[0]){
+      target.classList.add('active');
+      chosen[0].classList.remove('active')
+    }
+    
+}
+    
+function listenForSearch(link, input){
+    input.addEventListener('keyup', (e) => {
+        delay(function(){
+            loadGallery(link[0], input.value);
+            removeEventListener(input, delay);
+        }, 700);
+    })
+}
+
+function openNav(target) {
+  let gallery = target.closest('.gallery');
+  let sidenav = gallery.querySelector('.sidenav');
+  let content = gallery.querySelector('.main');
+  let section = target.parentElement.parentElement.parentElement.querySelector('section');
+  let cards = section.querySelectorAll('.card');
+      cards = Array.from(cards)
+  let card1 = section.querySelector('.card');
+  
+  cards.map(card => card.style.opacity = ".6");
+  card1.style.marginLeft = "160px";
+  sidenav.style.width = "150px";
+  section.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav(target) {
+  target.querySelector('.sidenav').style.width = '0'; 
+  let section = target.querySelector('section');
+  let cards = section.querySelectorAll('.card');
+      cards = Array.from(cards);
+  let card1 = section.querySelector('.card');
+  
+  cards.map(card => card.style.opacity = '1');
+  card1.style.marginLeft = '15px';
+  section.style.backgroundColor = '';
+}
+
+function getModal(params){
+  let modal = document.getElementById(params.modal);
+  let headerDest = modal.querySelector('.header');
+  let contentDest = modal.querySelector('.content');
+}
+
+function loadGallery(target, search){
+  let destination = target.parentElement.parentElement;
+      destination = destination.querySelector('section').parentElement;
+    
+      if (search){
+        
+        let url = target.getAttribute('data-url');
+            url = `${url}/search?${search}`;
+        $(destination).hide().load(url).hide().transition('fly left');
+         
+      } else {
+        let url = target.getAttribute('data-url');
+            url = target.getAttribute('data-url')
+        $(destination).hide().load(url).hide().transition('fly left');
+      }
+          
+}
+
+//Items Price Fields
+
+const getAppetizerPrices = dietArray => {
+  let priceSubHead = `<h4 class="prices sub-head">Item Pricing</h4>`
+  let d = dietArray;
+  let prices = `
+      
+      <div class="ui section divider fade-in"></div>
+           ${priceSubHead}
+            <div class="field fade-in">
+              <label class="fade-in">regular price</label>
+              <input class="fade-in input" type="text" name="price" data-text="regular" data-type="reg" placeholder="regular price">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">large-party price</label>
+              <input class="fade-in input" type="text" name="price" data-type="party" data-text="party-size" placeholder="party-sized price">
+            </div>
+        
+  `;
+  for (let i = 0; i < d.length; i++){
+    if (d[i] === 'vr'){
+      prices +=
+        `
+            <div class="field fade-in">
+              <label class="fade-in">${d[i]} price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="${d[i]} price" data-type="${d[i]}" data-text="vegan">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">vegan party-size price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="vegan party-sized price" data-type="vegan_party" data-text="vegan-party-size">
+            </div>
+        `
+    } else if (d[i] === 'gfr'){
+      prices +=
+        `
+            <div class="field fade-in">
+              <label class="fade-in">${d[i]} price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="${d[i]} price" data-type="${d[i]}" data-text="gluten-free">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">${d[i]} party-size price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="${d[i]}-party-sized price" data-type="gf_party" data-text="gf-party-size">
+            </div>
+        `
+    }
+  }
+  prices += `<div class="ui section divider fade-in"></div>`;
+  return prices;
+}
+
+const getSaladPrices = (dietArray) => {
+  let d = dietArray;
+  let prices = `
+      <div class="ui section divider fade-in"></div>
+            <div class="field fade-in">
+              <label class="fade-in input">sm salad price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="small salad price" data-type="sm" data-text="small">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">lg salad price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="large salad price" data-type="lg" data-text="large">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">large-party salad price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="party-sized price" data-type="party" data-text="party-size">
+            </div>
+  `;
+  prices += `<div class="ui section divider fade-in"></div>`;
+  return prices;
+}
+
+const getPastaPrices = (dietArray) => {
+  let d = dietArray;
+  let prices = `
+      <div class="ui section divider fade-in"></div>
+            <div class="field fade-in">
+              <label class="fade-in">regular price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="regular pasta price" data-type="reg" data-text="regular">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">large party price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="large party price" data-type="party" data-text="party-size">
+            </div>
+  `;
+  prices += `<div class="ui section divider fade-in"></div>`;
+  return prices;
+}
+
+const getHoagiePrices = (dietArray) => {
+  
+  let d = dietArray;
+  let prices = `
+      <div class="ui section divider fade-in"></div>
+            <div class="field fade-in">
+              <label class="fade-in">regular price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="regular hoagie price" data-type="reg" data-text="regular">
+            </div>
+  `;
+  for (let i = 0; i < d.length; i++){
+    if (d[i] === 'vr'){
+      prices += `
+      <div class="field fade-in">
+              <label class="fade-in">${d[i]} price</label>
+              <input class="fade-in input" type="text" name="price" placeholder="vegan hoagie price" data-type="vr" data-text="vegan">
+            </div>
+      `;
+    }
+  }
+  prices += `<div class="ui section divider fade-in"></div>`;
+  return prices;
+}
+
+const getPizzaPrices = (dietArray) => {
+  let d = dietArray;
+  let prices = `
+      <div class="ui section divider fade-in"></div>
+            <div class="field fade-in">
+              <label class="fade-in">sm 10" pizza price</label>
+              <input class="fade-in input" type="text" name="price" placeholder='10"pizza price' data-type="sm" data-text="s">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">med 12" pizza price</label>
+              <input class="fade-in input" type="text" name="price" placeholder='12"pizza price' data-type="med" data-text="m">
+            </div>
+            <div class="field fade-in">
+              <label class="fade-in">lg 16" pizza price</label>
+              <input class="fade-in input" type="text" name="price" placeholder='16"pizza price' data-type="lg" data-text="l">
+            </div>
+            `
+  if (dietArray.includes('gfr')){
+      prices += `<div class="field fade-in">
+                    <label class="fade-in">gluten-free 10" pizza price</label>
+                    <input class="fade-in" type="text" name="price" placeholder='10"gluten free price' data-type="gfr" data-text="gf">
+                </div>`
+  }
+  
+  prices += `<div class="ui section divider fade-in"></div>
+            `;
+  return prices;
+}
+
+const getDessertPrices = (dietArray, name) => {
+  let nameArray = name.split(' ');
+  let d = dietArray;
+  let prices = `
+    <div class="ui section divider fade-in"></div>
+        <div class="field fade-in">
+            <label class="fade-in">regular price</label>
+            <input class="fade-in" type="text" name="price" placeholder="regular price" data-type="reg" data-text="regular">
+        </div>
+  `;
+  if (nameArray.includes('bar') || nameArray.includes('brownie')){
+    prices += `
+        <div class="field fade-in">
+            <label class="fade-in">small platter price</label>
+            <input class="fade-in" type="text" name="price" placeholder="sm platter price" data-type="sm-platter" data-text="Sm Platter">
+        </div>
+        <div class="field fade-in">
+            <label class="fade-in">large platter price</label>
+            <input class="fade-in" type="text" name="price" placeholder="lg platter price" data-type="lg-platter" data-text="Lg Platter">
+        </div>
+    `;
+  } else if (nameArray.includes('platter')){
+    prices = `
+     <div class="ui section divider fade-in"></div>
+    <div class="field fade-in">
+          <label class="fade-in">small platter price</label>
+          <input class="fade-in" type="text" name="price" placeholder="sm platter price" data-type="sm-platter" data-text="Platter of 20 bites">
+      </div>
+      <div class="field fade-in">
+          <label class="fade-in">large platter price</label>
+          <input class="fade-in" type="text" name="price" placeholder="lg platter price" data-type="lg-platter" data-text="Platter of 40 bites">
+      </div>
+    `
+
+  }
+  return prices;
+}
+
+//Build Descriptions
+const getDescriptions = (orderTypes) => {
+  let o = orderTypes;
+  let descriptions = '';
+  for (let i = 0; i < o.length; i++){
+    descriptions += `
+        <div class="field">
+            <label>${o[i]} description</label>
+            <textarea name="desc" type="text" rows="3" data-type="${o[i]}"></textarea>
+        </div>
+  `;
+  }
+  return descriptions;
+}
+
+
+//Get Order Types
+const getOrderTypes = () => {
+  let orderTypes = document.getElementById('order-type')
+      .querySelectorAll('a');
+      orderTypes = Array.from(orderTypes);
+  let types = orderTypes.map(type => {
+      return type.dataset.value;
+  });
+  return types;
+}
+
+//Get Categories
+const getCategory = () => {
+  let category = document.getElementById('select-category');
+      category = category.querySelector('.text').innerText;
+      return category;
+}
+
+
+
+//add, remove Tags
+const getTags = (el) => {
+  let tags = document.getElementById(el).parentElement;
+      tags = tags.querySelectorAll('a');
+      tags = Array.from(tags);
+      tags = tags.map(tag => {
+        return tag.getAttribute('data-value');
+      })
+    return tags;
+}
+
+const getIngredientList = (el) => {
+  let ing = document.getElementById(el).parentElement;
+      ing = ing.querySelectorAll('a');
+      ing = Array.from(ing);
+      ing = ing.map(ingredient => {
+        let item = {
+          id: ingredient.getAttribute('data-value'),
+          name: ingredient.innerText
+        }
+        return item;
+      })
+      return ing;
+}
+
+//get locations
+const getLocations = (el) => {
+  let locs = document.getElementById(el).parentElement;
+      locs = locs.querySelectorAll('a');
+      locs = Array.from(locs);
+      locs = locs.map(loc => {
+        return loc.dataset.value;
+      })
+    return locs;
+}
+
+//category switcher
+const switchCategories = (category, tags, name) => {
+  if(category === 'appetizers'){
+        return getAppetizerPrices(tags);
+    } else if(category === 'salads'){
+        return getSaladPrices(tags);
+    } else if (category === 'hoagies'){
+        return getHoagiePrices(tags);
+    } else if (category === 'pizza'){
+        return getPizzaPrices(tags);
+    } else if (category === 'pasta'){
+        return  getPastaPrices(tags);
+    } else if (category === 'desserts'){
+        return getDessertPrices(tags, name);
+    }
+}
+
+//Get pricing from form
+const getPricing = (form, input) => {
+  let prices = form.querySelectorAll(input);
+      prices = Array.from(prices);
+      prices = prices.map(price => {
+        let item = {
+          type: price.getAttribute('data-type'),
+          text: price.getAttribute('data-text'),
+          amount: price.value
+        }
+        return item;
+      })
+      return prices;
+}
+
+//Get Descriptions from form
+const getDesc = (form, input) => {
+  let desc = form.querySelectorAll(input);
+      desc = Array.from(desc);
+      desc = desc.map(d => {
+        let description = {
+          type: d.getAttribute('data-type'),
+          text: d.value
+        }
+        return description;
+      })
+      return desc;
+}
+
+//Get Ingredients
+const getIngredients = (form, input) => {
+  let ingredients = form.querySelectorAll(input);
+      ingredients = Array.from(ingredients);
+      ingredients = ingredients.map(item => {
+        let ingredient = {
+          name: item.getAttribute('data-name'),
+          id: item.getAttribute('data-id')
+        }
+        return ingredient;
+      })
+      return ingredients;
+}
+
+const populateIngred = (form, input) => {
+  let ing = form.querySelectorAll(input);
+      ing = Array.from(ing);
+      ing = ing.map(item => {
+        let ingredient = {
+          id: item.getAttribute('data-id'),
+          name: item.getAttribute('data-name'),
+          amount: item.value
+        }
+        return ingredient;
+      })
+      return ing;
+}
+
+//POST Item Request
+const postItem = (newItem) => {
+  const fileInput = newItem.image;
+  const file = fileInput.files[0]
+  const body = new FormData
+        body.append("name", newItem.name)
+        body.append("tags",  newItem.tags)
+        body.append("description", JSON.stringify(newItem.description))
+        body.append("ingredients", JSON.stringify(newItem.ingredients))
+        body.append("order_types", newItem.order_types)
+        body.append("locations", newItem.locations)
+        body.append("category", newItem.category)
+        body.append("prices", JSON.stringify(newItem.prices))
+        body.append("notes", newItem.notes)
+        body.append("imagename", file)
+  return fetch("https://pl-api-v2-coreyjsax.c9users.io/items/create", {
+      body,
+      headers: {
+        Authorization: newItem.token,
+      },
+      method: "POST"
+    }).then((res) => {
+      let data = res.json();
+      return data;
+    }).catch((error)=>{
+      let err = error.json()
+      return err
+    })
+        
+}
+
+//Untappd Seach Request
+
+const getBeersFromUntappd = (query) => {
+  return fetch(`https://pl-api-v2-coreyjsax.c9users.io/location/5c2bbcfb53352c57e74314ff/untappd/search/q=${query}`)
+  .then((res) => {
+    let data = res.json()
+    return data;
+  }).catch((error) => {
+    return error;
+  })
+}
+
+//Untappd Add Section Request
+const createUntappdSection = (menuId, locId, section) => {
+  return fetch(`/location/${locId}/untappd/${menuId}/section/create`, {
+    body: JSON.stringify({section}),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: 'POST',
+  })
+  .then((res) => res.json())
+  .catch((err) => err)
+}
+
+//Untappd Delete Section Request 
+const deleteUntappdSection = (sectionId, locId) => {
+  return fetch(`/location/${locId}/untappd/${sectionId}/delete`,{
+    method: 'POST'
+  })
+  .then((res) => res.json())
+  .catch((err) => err)
+}
+
+//Notification Modal
+const notification = (message) => {
+  let notificationModal = document.getElementById('notification_modal');
+  let html = `
+    <div class="ui inverted teal segment tertiary">
+      <h4>${message}</h4>
+    </div>
+  `
+  notificationModal.innerHTML = html;
+  $(notificationModal)
+    .modal({
+        dimmerSettings:{
+				opacity:.3,
+			}})
+    .modal('show')
+    .delay(2500)
+    .queue(function(){
+      $(location.reload())
+      $(this).modal('hide').dequeue()
+      
+    })
+}
+
+const confirmAction = (action, content, locationId) => {
+  let notificationModal = document.getElementById('notification_modal');
+  let html = `
+    <div class="ui inverted red segment tertiary">
+      <h4>Are you sure you want to ${action}</h4>
+      <div height="30px"><iframe src="https://giphy.com/embed/T7j5439wv9iq4"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
+      <div id="confirm-buttons">
+        <button class="ui button teal deny">no</button>
+        <button class="ui button pink confirm">yes</button>
+      </div>
+    </div>
+  `;
+  notificationModal.innerHTML = html;
+  $(notificationModal).modal('show')
+  let confirm_buttons = document.getElementById('confirm-buttons');
+  let confirmListener = () => {
+    let target = event.target;
+    if (target.matches('.deny')){
+      confirm_buttons.removeEventListener('click', confirmListener);
+      $(notificationModal).modal('hide')
+    } else if (target.matches('.confirm')){
+      let id = content.parentElement.getAttribute('data-id');
+      console.log(id)
+       deleteUntappdSection(id, locationId)
+            .then((res) => {
+                notification(`${res.section.name} has been deleted! `)
+            }); 
+    }
+  }
+  confirm_buttons.addEventListener('click', confirmListener)
+}
+
+
+let untappdSectionCreate = {
+    
+    sectionInput: function(locId, menuId){
+    let html = 
+      `<div id="create-sec" class="ui form" data-id=${locId} data-menu_id=${menuId}>
+        <div style="margin-left:95%"><i class="x icon cancel section"></i></div>
+        <div class="section ui segment inverted">
+          <div class="ui small fluid icon input field">
+            <input type="text" placeholder="Section name">
+          </div>
+          <div class="field">
+            <textarea rows="2" type="text" placeholder="section description"></textarea>
+          </div>
+          <button class="ui button pink" style="float:right">create section</button>
+      </div>`
+    return html;
+  }, 
+  addToUntappd: function(request){
+    let form = document.getElementById('create-sec');
+    $(form).transition('fly left');
+    form.remove();
+    let locId = request.form.getAttribute('data-id');
+    let menuId = request.form.getAttribute('data-menu_id');
+    let section = {
+      name: request.name,
+      description: request.name
+    }
+    createUntappdSection(menuId, locId, section)
+    .then((res) => {
+      return res.json()
+    }).catch((err) => {
+      return err;
+    })
+    
+    
+  },
+  listen: function(){
+    let target = event.target;
+    console.log(target)
+    if (target.matches('.button')){
+        let request = {}
+        
+            request.form = target.closest('.form');
+            request.name = request.form.querySelector('input').value;
+            request.description = request.form.querySelector('textarea').value;
+        if (request.name && request.description != null) {
+           let stuff = untappdSectionCreate.addToUntappd(request)
+           console.log(stuff);
+           return stuff;
+              
+        } else {
+            console.log('missing data')
+        }
+    } 
+  }
+}
+
+
+

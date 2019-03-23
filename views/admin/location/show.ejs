@@ -1,0 +1,76 @@
+<% include ../../partials/head %>
+<div>
+<style scoped>
+    html {
+        overflow: hidden;
+    }
+    body {
+        background: #E55D87;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    #admin_page {
+        margin-top:43px;
+    }
+    .gallery {
+        height:320px;
+        margin-top:90px;
+    }
+    .untappd.gallery {
+        margin-top: 0px;
+    }
+    h1 {
+       
+       font-family:'Axiforma-Bold';
+       
+    }
+.headline{
+    margin-top:45px;
+    margin-left: 10px;
+    z-index:1000;
+}
+</style>
+
+<% include ../../partials/user %>
+<div id="location-show">
+    <div class="headline">
+        <h1><%=location.name%></h1>
+    </div>
+    <div class="untappd gallery">
+        <div class="main">
+            <div id="untappd-gallery" class="content-gallery">
+                <% include ../../partials/location/untappd-cards %>
+            </div>
+        </div>    
+    </div>
+    <div class="employment gallery">
+        <div class="main">
+            <div id="employment-gallery" class="content-gallery">
+               
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
+</div>
+<% include ../../partials/foot %>
+<script>
+    function locationShowController(){
+        let page = document.getElementById('location-show')
+        
+        page.addEventListener('click', (event) => {
+            let target = event.target;
+            if (target.matches('.menu-actions')){
+                openNav(target)
+            } else if (target.parentElement.matches('.menu-actions')){
+                openNav(target.parentElement)
+            } else if (target.matches('.closebtn')){
+                let gallery = target.closest('.gallery');
+                closeNav(gallery)
+            }
+        })
+    }
+    locationShowController();
+    $('.ui.dropdown').dropdown();
+</script>

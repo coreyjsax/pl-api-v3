@@ -1,0 +1,96 @@
+ <div>
+ <style scoped>
+     
+ </style>
+ 
+  <div id = "create-item-form">
+  <form id="add-item" class="ui form">
+        <div class="ui inverted segment">
+        <div class="field">
+            <label>Item Name</label>
+            <input class="name input" type="text" name="name" placeholder="item name">
+        </div>
+        <input id="file-input" class="form-control-file file-control-sm input" type="file" name="imagename" />
+        <div id="select-locations" class="field">
+            <label>Locations</label>
+            <select name="locations" id="location_dropdown" multiple="" class="ui fluid dropdown">
+                <option value="">select all locations that will serve menu</option>
+                <% for (let i = locations.length; i--;){ %>
+                <option value="<%=locations[i]._id%>"><%=locations[i].name%></option>
+                <% } %>
+            </select>
+        </div>
+        <div id="location-form-data" class="fields">
+            
+        </div>
+        <div id="select-category" class="field">
+            <label>Category</label>
+            <select name="category" id="category_dropdown" class="ui fluid dropdown">
+                <option value="">Select a menu category</option>
+                <% let categories = ['appetizers', 'salads','pasta','hoagies','pizza','desserts','red_wine','white_wine','beer','slices']%>
+                <% for (let i = 0; i < categories.length; i++){ %>
+                <option value="<%=categories[i]%>"><%=categories[i]%></option>
+                <% }%>
+            </select>
+        </div>
+        <div class="ui inverted olive segment">
+            <div id="order-type" class="field">
+                <label>Order Types</label>
+                <select name="order_type" multiple="" id="order_type_dropdown" class="ui fluid search dropdown">
+                    <option value="">select order types</option>
+                    <option data-id="123" value="delivery">Delivery</option>
+                    <option value="dine-in">Dine-in</option>
+                    <option value="slice-line">Slice line</option>
+                    <option value="bar">Bar</option>
+                    <option value="carry-out">Carry out</option>
+                </select>
+            </div>
+            <div id="order-type-descriptions">
+                
+            </div>
+        </div>
+        <div class="ui inverted teal segment">
+            <div id="select-ingredients" class="field ingredients">
+                <label>Ingredients</label>
+                <select name="ingredients" id="ingredients_dropdown" multiple="" class="ui fluid search dropdown">
+                    <option value="">add item ingredients</option>
+                    <% for (let i = ingredients.length; i--;){ %>
+                    <option value="<%=ingredients[i]._id%>"><%=ingredients[i].name%></option>
+                    <% } %>
+                </select>
+            </div>
+            <div id="ingred-desc">
+                
+            </div>
+        </div>
+        <div id="item-diet-tags" class="field">
+            <label>Dietary Tags</label>
+            <select name="tags" id="tags_dropdown" multiple="" class="ui fluid search dropdown tags">
+                <option value="">Select Dietary Tags</option>
+                <option value="v">V</option>
+                <option value="vr">VR</option>
+                <option value="gf">GF</option>
+                <option value="gfr">GFR</option>
+                <option value="contains_nuts">Contains Nuts</option>
+                <option value="contains_gluten">Contains Gluten</option>
+            </select>
+        </div>
+        <div id="prices" class="prices">
+            
+        </div>
+        <div class="field">
+            <label>Notes</label>
+            <textarea name="notes" placeholder="Enter notes about this item" rows="3"></textarea>
+        </div>
+        <div style="float:right;" class="actions dish">
+            <div class="ui red button deny">
+              <i class="remove icon"></i>
+             cancel
+            </div>
+            
+        </div>
+        </div>
+    </form>
+    <button id="submit-button" class="ui button green"><i class="checkmark icon"></i>Submit</button>
+    </div>
+</div>

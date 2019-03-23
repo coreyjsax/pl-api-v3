@@ -1,0 +1,72 @@
+
+
+<% include ../partials/head %>
+<div>
+<style scoped>
+    html {
+        overflow: hidden;
+    }
+    body {
+        background: #E55D87;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    #admin_page {
+        margin-top:43px;
+    }
+    .gallery {
+        height:320px;
+        margin-top:90px;
+    }
+    .location.gallery {
+        margin-top:-30px;
+    }
+    h1, p {
+       position:absolute;
+    }
+
+</style>
+<% include ../partials/user%>
+<div id="admin_page">
+    <h5 class="welcome">welcome</h5>
+    <div class="location gallery">
+        <div class="main">
+            <div id="location-gallery" class="content-gallery">
+                <% include ../partials/location/location-cards %>
+            </div>
+        </div>    
+    </div>
+    <div class="menu gallery">
+        <div class="main">
+            <div id="menu-gallery" class="content-gallery">
+                <% include ../partials/menu/menu-cards %>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+
+<% include ../partials/foot %>
+<script>
+
+    
+     
+    function adminIndexController(){
+      let page = document.getElementById('admin_page');
+      
+      page.addEventListener('click', (event) => {
+          let target = event.target;
+          
+          if (target.matches('.gallery')){
+              openNav(target)
+          } else if (target.matches('.closebtn')){
+              let gallery = target.closest('.gallery');
+              closeNav(gallery)
+          } 
+      })
+    }
+    adminIndexController();
+    
+</script>
